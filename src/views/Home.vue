@@ -37,4 +37,11 @@ export default {
   display: flex;
 }
 
+/* MEDIA QUERIES */
+@media only screen and (max-width: 560px) {
+
+  .home {
+    background-image: url("../assets/mobile_print1.jpg");
+  }
+}
 </style>

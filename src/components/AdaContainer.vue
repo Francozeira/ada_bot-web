@@ -25,7 +25,8 @@
       </div>
 
       <div class="containerFooter">
-
+        <input type="text" class="botInput" v-on:keyup="checkInput" v-model="msg" placeholder="Digite uma mensagem...">
+        <button class="sendMsg" @click='sendInput'><i class="fas fa-paper-plane"></i></button>
       </div>
 
     </div>
@@ -39,18 +40,34 @@ export default {
     // msg: String
   },
   data: function () {
-  return {
-    chatbotOpened: false
-  }
-}
+    return {
+      chatbotOpened: false,
+      msg: ''
+    }
+  },
+  methods: {
+    checkInput(e) {
+      if (e.keyCode === 13) {
+        this.sendInput()
+      }
+    },
+    sendInput() {
+      console.log('this.msg :>> ', this.msg)
+      this.msg = ''
+    }
+  },
 }
 </script>
 
 <style scoped>
 
+*:focus {
+  outline: none;
+}
+
 .adaContainer {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   right: 30px;
 }
 
@@ -164,25 +181,66 @@ export default {
 }
 
 .containerBody {
-  width: 98%;
-  height: 305px;
+  width: 95%;
+  height: 345px;
 	display: flex;
   margin: 5px auto;
   border-radius: 5px;
-  background-color: aliceblue;
+  background-color: rgb(32, 34, 0);
 }
 
 .containerFooter {
-  width: 98%;
-  height: 100px;
-  bottom: 0;  
-  margin: auto;
+  width: 95%;
+  height: 40px;
+  margin: 15px auto 0 auto;
   border-radius: 5px;
-  background-color: cornflowerblue;
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
+}
+
+.botInput {
+  width: calc(100% - 40px);
+  border-radius: 15px;
+  padding: 10px 15px;
+  border: currentColor;
+  background-color: rgb(27, 33, 39);
+  color: white;
+}
+
+.sendMsg {
+  width: 40px !important;
+  margin-left: 10px;
+  border-radius: 100%;
+  cursor: pointer;
+  padding: 0;
+  border: currentColor;
+  background-color: rgb(0, 151, 68);
+  color: white;
+}
+
+.sendMsg:hover, .sendMsg:focus {
+  border: currentColor;
+  background-color: rgb(1, 255, 115);
+}
+
+.fa-paper-plane {
+  font-size: 1.5em;
 }
 
 /* MEDIA QUERIES */
-@media only screen and (max-width: 500px) {
-  
+@media only screen and (max-width: 560px) {
+  .adaContainer {
+    position: absolute;
+    right: 2.5vw;
+    bottom: 10px;
+  }
+
+  .chatContainer {
+    width: 95vw;
+  }
 }
 </style>
