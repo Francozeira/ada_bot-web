@@ -12,15 +12,22 @@
           </div>
           <div class="adaHeaderIcons">
             <div @click="chatbotOpened = false" class="closeChatBtn">
-              <i class=" fas fa-times"></i>
+              <i class="fas fa-minus"></i>
             </div>
-            <div @click="chatbotOpened = false" class="bugChatBtn">
+            <!-- <div @click="chatbotOpened = false" class="bugChatBtn">
               <i class="fas fa-bug"></i>
-            </div>
+            </div> -->
           </div>
       </div>
 
       <div class="containerBody">
+
+        <div v-for="msg in sessionMessages" :key="msg.msgId" class="msgContainer">
+          <div class="msgBubble" v-bind:class="{ userMsg: msg.origin === 'user',  botMsg: msg.origin === 'bot'}">
+            {{msg.text}}
+          </div>
+          
+        </div>
 
       </div>
 
@@ -34,6 +41,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'AdaContainer',
   props: {
@@ -42,7 +51,8 @@ export default {
   data: function () {
     return {
       chatbotOpened: false,
-      msg: ''
+      msg: '',
+      sessionMessages: []
     }
   },
   methods: {
@@ -52,7 +62,28 @@ export default {
       }
     },
     sendInput() {
-      console.log('this.msg :>> ', this.msg)
+      
+      this.sessionMessages.push({
+        origin: 'user',
+        text: this.msg,
+        msgId: this.sessionMessages.length + 1
+        })
+
+      axios.post('https://ada-bot.mybluemix.net/api/messages', {
+        "user_id": "625033",
+        "type": "text",
+        "text": this.msg
+      })
+
+      .then((response) => {
+        console.log(response.data)
+        this.sessionMessages.push({
+          origin: 'bot',
+          text: response.data.message,
+          msgId: this.sessionMessages.length + 1
+        })
+      })
+
       this.msg = ''
     }
   },
@@ -151,7 +182,9 @@ export default {
 }
 
 .closeChatBtn {
-  background-color: rgb(94, 0, 0);
+  /* background-color: rgb(94, 0, 0);
+   */
+  background-color: rgb(94, 88, 0);
   color: aliceblue;
   font-size: 1.5em;
   width: 50px;
@@ -162,7 +195,8 @@ export default {
 
 .closeChatBtn:hover {
   cursor: pointer;
-  background-color: rgb(255, 0, 0);
+  /* background-color: rgb(255, 0, 0); */
+  background-color: rgb(214, 200, 3);
 }
 
 .bugChatBtn {
@@ -183,10 +217,19 @@ export default {
 .containerBody {
   width: 95%;
   height: 345px;
-	display: flex;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column nowrap;
   margin: 5px auto;
   border-radius: 5px;
   background-color: rgb(32, 34, 0);
+  /* align-items: flex-start; */
+
+}
+
+.containerBody > :first-child {
+  margin-top: auto !important;
+  /* use !important to prevent breakage from child margin settings */
 }
 
 .containerFooter {
@@ -207,12 +250,12 @@ export default {
   border-radius: 15px;
   padding: 10px 15px;
   border: currentColor;
-  background-color: rgb(27, 33, 39);
+  background-color: rgb(62, 66, 1);
   color: white;
 }
 
 .sendMsg {
-  width: 40px !important;
+  width: 40px;
   margin-left: 10px;
   border-radius: 100%;
   cursor: pointer;
@@ -229,6 +272,58 @@ export default {
 
 .fa-paper-plane {
   font-size: 1.5em;
+}
+
+.msgBubble {
+	position: relative;
+  width: fit-content;
+  min-width: 50px;
+  max-width: 75%;
+  min-height: 40px;
+  /* height: 50px; */
+  margin: 15px;
+  padding: 5px 10px;
+	border-radius: .4em;
+  color: white;
+}
+
+.userMsg {
+  margin-left: auto; 
+  margin-right: 15px;
+  background-color: rgb(1, 112, 50);
+}
+
+.userMsg:after {
+	content: '';
+	position: absolute;
+  right: 0;
+	top: 25px;
+	width: 0;
+	height: 0;
+	border: 22px solid transparent;
+	border-left-color: rgb(1, 112, 50);
+	border-right: 0;
+	margin-top: -25px;
+	margin-right: -11px;
+}
+
+.botMsg {
+  background: rgb(19, 20, 0);
+  color: gray;
+}
+
+.botMsg:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 22px solid transparent;
+	border-right-color: rgb(19, 20, 0);
+	border-left: 0;
+	margin-top: -25px;
+	margin-left: -11px;
 }
 
 /* MEDIA QUERIES */
