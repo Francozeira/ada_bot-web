@@ -31,7 +31,7 @@ export default {
 .home {
   height: 100%;
   width: 100%;
-  background-image: url("../assets/home_print.png");
+  background-image: url("../assets/web_1.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -41,7 +41,7 @@ export default {
 @media only screen and (max-width: 560px) {
 
   .home {
-    background-image: url("../assets/mobile_print1.jpg");
+    background-image: url("../assets/mobile_1.png");
   }
 }
 </style>

@@ -20,7 +20,7 @@ export default {
 .about {
   height: 100%;
   width: 100%;
-  background-image: url("../assets/home_print.png");
+  background-image: url("../assets/web_1.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

@@ -20,7 +20,7 @@
           </div>
       </div>
 
-      <div class="containerBody">
+      <div class="containerBody" id="containerBody">
 
         <div v-for="msg in sessionMessages" :key="msg.msgId" class="msgContainer">
           <div class="msgBubble" v-bind:class="{ userMsg: msg.origin === 'user',  botMsg: msg.origin === 'bot'}">
@@ -56,11 +56,15 @@ export default {
     }
   },
   methods: {
+
+    // TREATING THE CASE OF USER PRESSES ENTER
     checkInput(e) {
       if (e.keyCode === 13) {
         this.sendInput()
       }
     },
+
+    // SEND TYPED TEXT TO BACKEND SERVICE
     sendInput() {
       
       this.sessionMessages.push({
@@ -82,10 +86,21 @@ export default {
           text: response.data.message,
           msgId: this.sessionMessages.length + 1
         })
+
       })
 
       this.msg = ''
+      this.scrollDownMessages()
+    },
+    
+    // SCROLL DOWN MESSAGES DIV
+    scrollDownMessages() {
+      setTimeout(() => {
+        const el = document.getElementById("containerBody")
+        el.scrollTop = el.scrollHeight
+      }, 2000)
     }
+
   },
 }
 </script>
@@ -309,7 +324,7 @@ export default {
 
 .botMsg {
   background: rgb(19, 20, 0);
-  color: gray;
+  color: white;
 }
 
 .botMsg:after {
