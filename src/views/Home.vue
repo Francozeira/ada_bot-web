@@ -41,7 +41,7 @@ export default {
 @media only screen and (max-width: 560px) {
 
   .home {
-    background-image: url("../assets/mobile_1.png");
+    background-image: url("../assets/mobile_2.png");
   }
 }
 </style>

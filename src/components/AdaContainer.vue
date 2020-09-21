@@ -24,7 +24,11 @@
 
         <div v-for="msg in sessionMessages" :key="msg.msgId" class="msgContainer">
           <div class="msgBubble" v-bind:class="{ userMsg: msg.origin === 'user',  botMsg: msg.origin === 'bot'}">
-            {{msg.text}}
+
+            <!-- IN CASE OF BOT MESSAGE, USE SUPPLIED WATSON TEXT -->
+            <div v-if="msg.origin === 'bot'" v-html="msg.text" ></div>
+            <div v-else >{{msg.text}}</div>
+
           </div>
           
         </div>
@@ -59,7 +63,7 @@ export default {
 
     // TREATING THE CASE OF USER PRESSES ENTER
     checkInput(e) {
-      if (e.keyCode === 13) {
+      if (e.keyCode === 13 && this.msg !== '') {
         this.sendInput()
       }
     },
@@ -67,30 +71,32 @@ export default {
     // SEND TYPED TEXT TO BACKEND SERVICE
     sendInput() {
       
-      this.sessionMessages.push({
-        origin: 'user',
-        text: this.msg,
-        msgId: this.sessionMessages.length + 1
-        })
-
-      axios.post('https://ada-bot.mybluemix.net/api/messages', {
-        "user_id": "625033",
-        "type": "text",
-        "text": this.msg
-      })
-
-      .then((response) => {
-        console.log(response.data)
+      if (this.msg !== '') {
         this.sessionMessages.push({
-          origin: 'bot',
-          text: response.data.message,
+          origin: 'user',
+          text: this.msg,
           msgId: this.sessionMessages.length + 1
+          })
+
+        axios.post('https://ada-bot.mybluemix.net/api/messages', {
+        // axios.post('http://localhost:8083/api/messages', {
+          "user_id": "625033",
+          "type": "text",
+          "text": this.msg
         })
 
-      })
+        .then((response) => {
+          console.log(response.data)
+          this.sessionMessages.push({
+            origin: 'bot',
+            text: response.data.message,
+            msgId: this.sessionMessages.length + 1
+          })
+        })
 
-      this.msg = ''
-      this.scrollDownMessages()
+        this.msg = ''
+        this.scrollDownMessages()
+      }
     },
     
     // SCROLL DOWN MESSAGES DIV
@@ -98,7 +104,7 @@ export default {
       setTimeout(() => {
         const el = document.getElementById("containerBody")
         el.scrollTop = el.scrollHeight
-      }, 2000)
+      }, 1500)
     }
 
   },
@@ -239,7 +245,6 @@ export default {
   border-radius: 5px;
   background-color: rgb(32, 34, 0);
   /* align-items: flex-start; */
-
 }
 
 .containerBody > :first-child {
@@ -294,12 +299,12 @@ export default {
   width: fit-content;
   min-width: 50px;
   max-width: 75%;
-  min-height: 40px;
-  /* height: 50px; */
+  min-height: 35px;
   margin: 15px;
-  padding: 5px 10px;
+  padding: 5px 15px;
 	border-radius: .4em;
   color: white;
+  text-align: left;
 }
 
 .userMsg {
@@ -331,7 +336,7 @@ export default {
 	content: '';
 	position: absolute;
 	left: 0;
-	top: 50%;
+	top: 25px;
 	width: 0;
 	height: 0;
 	border: 22px solid transparent;
@@ -339,6 +344,26 @@ export default {
 	border-left: 0;
 	margin-top: -25px;
 	margin-left: -11px;
+}
+
+/* SCROLL */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: black;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(255, 255, 255); 
+  border-radius: 10px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(62, 66, 1); 
 }
 
 /* MEDIA QUERIES */
