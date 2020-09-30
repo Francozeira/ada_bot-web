@@ -330,6 +330,7 @@ export default {
 .botMsg {
   background: rgb(19, 20, 0);
   color: white;
+  overflow-wrap: break-word;
 }
 
 .botMsg:after {
