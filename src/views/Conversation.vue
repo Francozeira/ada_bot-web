@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="conversation">
     <AdaContainer />
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 
-.about {
+.conversation {
   height: 100%;
   width: 100%;
   background-image: url("../assets/web_1.png");
