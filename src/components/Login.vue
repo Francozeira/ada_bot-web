@@ -17,12 +17,21 @@
           </div>
         </div>
 
+      <div v-if="this.option === 'guest'">
+        Entrando com ID gerado automaticamente:
+        <span class="txtAlt">{{this.user}}</span>
+      </div>
+
+      <div v-if="this.option === 'student'">
+        Digite sua Matrícula (8 dígitos apenas):
+        <input type="text" @keypress="isNumber($event)" v-model="student_id" maxlength="8" class="registry">
+      </div>
+
       <router-link to="/conversation" tag="button" :disabled="user === null" class="enterConversation">
         <div v-if="user === null" class="">Selecione o Usuário <i class="far fa-times-circle"></i></div>
         <div v-else class="">Acessar portal <i class="fas fa-sign-in-alt"></i></div>
       </router-link>
 
-      <div>{{this.$store.state.user}}</div>
     </div>
 
   </div>
@@ -33,7 +42,8 @@ export default {
   name: 'login',
   data: function () {
     return {
-      option: ''
+      option: '',
+      student_id: ''
     }
   },
   computed: {
@@ -50,18 +60,41 @@ export default {
       }
     },
     optStudent () {
+      this.$store.commit('upateUser', null)
       this.option = 'student'
-      console.log(Math.floor(Math.random() * 1000000000));
+    },
+    isNumber: function(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
+        evt.preventDefault()
+      } else return true
     }
   },
+  watch: {
+    student_id: function () {
+      if (this.student_id.length === 8) this.$store.commit('upateUser', this.student_id)
+      if (this.user != null && this.student_id.length < 8) this.$store.commit('upateUser', null)
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .formContainer {
-  height: 500px;
   width: 80%;
   max-width: 700px;
   margin: 0 auto;
@@ -69,24 +102,6 @@ export default {
   background-color: #152642;
   color: aliceblue;
   font-family: 'Baloo Tamma 2', cursive;
-}
-
-.txtLg {
-  font-size: 2em;
-  font-family: 'Alata', sans-serif;
-}
-
-.enterConversation {
-  width: 80%;
-  max-width: 400px;
-  height: 40px;
-  margin-left: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 0;
-  border: currentColor;
-  background-color: rgb(0, 151, 68);
-  color: white;
 }
 
 .enterConversation:disabled {
@@ -114,11 +129,6 @@ export default {
   background-color: rgba(255, 166, 0, 0.9);
 }
 
-.regStudent {
-  border: 20px solid rgba(94, 93, 93, 0.61);
-  color:  rgba(255, 255, 255, 0.5);
-}
-
 .guestOpt {
   width: 50%;
   height: 200px;
@@ -133,7 +143,6 @@ export default {
   color:  rgba(255, 255, 255, 0.5);
 }
 
-
 .optSelected {
   border: 20px solid rgba(255, 255, 255, 1) ;
   color: 20px solid rgba(255, 255, 255, 1);
@@ -147,12 +156,90 @@ export default {
   margin-top: 20px;
 }
 
+.registry {
+  width: 92px;
+  font-size: 1.2em;
+  font-family: 'Alata', sans-serif;
+  font-weight: bold;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  -webkit-appearance: none;
+  background-color: rgb(0, 0, 0, 0.2);
+  color: white;
+}
+
+.enterConversation {
+  width: 80%;
+  max-width: 400px;
+  height: 40px;
+  margin: 20px 0 40px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.3em;
+  border: currentColor;
+  background-color: rgb(0, 151, 68);
+  color: white;
+}
+
+/* FONTS */
+
+.txtLg {
+  font-size: 2em;
+  font-family: 'Alata', sans-serif;
+}
+
+.txtAlt {
+  font-size: 1.2em;
+  font-family: 'Alata', sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  background-color: rgb(0, 0, 0, 0.2);
+}
 /* MEDIA QUERIES */
 @media only screen and (max-width: 560px) {
 
   .formContainer {
     width: 95vw;
   }
+
+  .studentOpt {
+  width: 50%;
+  height: 200px;
+  border-radius: 20px;
+  margin: 40px 10px 20px 20px;
+  cursor: pointer;
+  background-color: rgba(255, 166, 0, 0.9);
+  }
+
+  .guestOpt {
+    width: 50%;
+    height: 200px;
+    border-radius: 20px;
+    margin: 40px 20px 20px 10px;
+    cursor: pointer;
+    background-color: rgba(124, 0, 128, 0.9);
+  }
+
+  .notSelected {
+    border: 10px solid rgba(94, 93, 93, 0.61);
+    color:  rgba(255, 255, 255, 0.5);
+  }
+
+  .optSelected {
+    border: 10px solid rgba(255, 255, 255, 1) ;
+    color:  rgba(255, 255, 255, 1);
+  }
+
+  .registry {
+  width: 102px;
+}
+
 }
 
 </style>

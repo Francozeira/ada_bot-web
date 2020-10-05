@@ -8,7 +8,7 @@
           <div class="adaChatTitle">
             <span class="status"></span>
             Ada Chatbot
-            <span class="adaChatInfo">Online</span>
+            <span class="adaChatInfo">ID: {{this.user}}</span>
           </div>
           <div class="adaHeaderIcons">
             <div @click="chatbotOpened = false" class="closeChatBtn">
@@ -59,6 +59,11 @@ export default {
       sessionMessages: []
     }
   },
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
   methods: {
 
     // TREATING THE CASE OF USER PRESSES ENTER
@@ -80,7 +85,7 @@ export default {
 
         axios.post('https://ada-bot.mybluemix.net/api/messages', {
         // axios.post('http://localhost:8083/api/messages', {
-          "user_id": "625033",
+          "user_id": this.user,
           "type": "text",
           "text": this.msg
         })
