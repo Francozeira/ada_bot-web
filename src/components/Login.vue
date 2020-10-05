@@ -24,7 +24,7 @@
 
       <div v-if="this.option === 'student'">
         Digite sua Matrícula (8 dígitos apenas):
-        <input type="text" @keypress="isNumber($event)" v-model="student_id" maxlength="8" class="registry">
+        <input type="number" @input="validateInput($event)" :value="student_id" ref="registry" class="registry">
       </div>
 
       <router-link to="/conversation" tag="button" :disabled="user === null" class="enterConversation">
@@ -63,12 +63,10 @@ export default {
       this.$store.commit('upateUser', null)
       this.option = 'student'
     },
-    isNumber: function(evt) {
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
-        evt.preventDefault()
-      } else return true
+    validateInput: function() {
+      if (this.$refs.registry.value.length > 8) {
+        this.$refs.registry.value = this.student_id
+      } else this.student_id = this.$refs.registry.value
     }
   },
   watch: {
