@@ -1,7 +1,7 @@
 <template>
   <div class="login">
-      <div class="txtLg">Ada Bot</div>
-      <!-- <img src="../assets/ada.jpg" alt=""> -->
+    <div class="txtLg">Ada Bot</div>
+    <!-- <img src="../assets/ada.jpg" alt=""> -->
 
     <div class="formContainer">
       <div class="txtLg">Usuário:</div>
@@ -207,12 +207,12 @@ input[type=number] {
   }
 
   .studentOpt {
-  width: 50%;
-  height: 200px;
-  border-radius: 20px;
-  margin: 40px 10px 20px 20px;
-  cursor: pointer;
-  background-color: rgba(255, 166, 0, 0.9);
+    width: 50%;
+    height: 200px;
+    border-radius: 20px;
+    margin: 40px 10px 20px 20px;
+    cursor: pointer;
+    background-color: rgba(255, 166, 0, 0.9);
   }
 
   .guestOpt {
@@ -235,8 +235,8 @@ input[type=number] {
   }
 
   .registry {
-  width: 102px;
-}
+    width: 102px;
+  }
 
 }
 

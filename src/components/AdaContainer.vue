@@ -84,7 +84,6 @@ export default {
           })
 
         axios.post('https://ada-bot.mybluemix.net/api/messages', {
-        // axios.post('http://localhost:8083/api/messages', {
           "user_id": this.user,
           "type": "text",
           "text": this.msg
@@ -109,7 +108,7 @@ export default {
       setTimeout(() => {
         const el = document.getElementById("containerBody")
         el.scrollTop = el.scrollHeight
-      }, 1500)
+      }, 2000)
     }
 
   },
@@ -120,6 +119,11 @@ export default {
 
 *:focus {
   outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: #FFFFFF;
 }
 
 .adaContainer {

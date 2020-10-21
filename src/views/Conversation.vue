@@ -1,17 +1,24 @@
 <template>
   <div class="conversation">
-    <AdaContainer />
+    <NoIdReturn  v-if="this.user === null"/>
+    <AdaContainer  v-else />
   </div>
 </template>
 
 <script>
 import AdaContainer from '@/components/AdaContainer.vue'
+import NoIdReturn from '@/components/NoIdReturn.vue'
 
 export default {
   name: 'Home',
   components: {
-    AdaContainer
-  }
+    AdaContainer, NoIdReturn
+  },
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
 }
 </script>
 
