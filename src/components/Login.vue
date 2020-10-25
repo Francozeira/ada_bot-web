@@ -1,11 +1,13 @@
 <template>
   <div class="login">
-    <div class="txtLg">Ada Bot</div>
-    <!-- <img src="../assets/ada.jpg" alt=""> -->
+    <div class="HeaderTxt">    
+      <img class="ada-btn" src="../assets/ada_yellow cropped.png" alt="">
+      Ada Bot
+    </div>
 
     <div class="formContainer">
-      <div class="txtLg">Usuário:</div>
-      <div>Selecione entre Aluno e insira sua matrícula ou entre como visitante para que eu possa começar o seu atendimento</div>
+      <div class="txtLg">Usuário</div>
+      <div class="descriptionTxt">Selecione entre Aluno e insira sua matrícula ou entre como visitante para que eu possa começar o seu atendimento</div>
         <div class="optContainer">
           <div @click="optStudent" :class="this.option === 'student' ? 'optSelected' : 'notSelected'" class="studentOpt">
             <i class="optIcon fas fa-user-graduate fa-7x"></i>
@@ -92,10 +94,25 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+
+.ada-btn {
+  vertical-align: text-bottom;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.ada-btn:hover {
+  cursor: pointer;
+  filter: contrast(150%) drop-shadow(4px 4px 5px rgb(255, 251, 1));
+  filter: saturate(2) drop-shadow(4px 4px 5px rgb(255, 251, 1));
+}
+
 .formContainer {
   width: 80%;
   max-width: 700px;
   margin: 0 auto;
+  padding-top: 30px;
   border-radius: 10px;
   background-color: #152642;
   color: aliceblue;
@@ -185,9 +202,25 @@ input[type=number] {
 
 /* FONTS */
 
-.txtLg {
-  font-size: 2em;
+.HeaderTxt {
+  margin: 50px auto 40px auto;
   font-family: 'Alata', sans-serif;
+  font-size: 3em;
+  font-weight: 600;
+  color:yellow;
+}
+
+.txtLg {
+  margin: 0 20px 0 20px;
+  font-family: 'Alata', sans-serif;
+  text-align: left;
+  font-size: 2em;
+  color:yellow;
+}
+
+.descriptionTxt {
+  margin: 20px;
+  text-align: justify;
 }
 
 .txtAlt {
@@ -204,6 +237,7 @@ input[type=number] {
 
   .formContainer {
     width: 95vw;
+    margin-bottom: 50px;
   }
 
   .studentOpt {

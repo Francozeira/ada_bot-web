@@ -25,12 +25,12 @@ body {
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  background: black;
+  background: transparent;
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(255, 255, 255); 
+  background: rgba(255, 255, 0, 0.6); 
   border-radius: 10px;
 }
 /* Handle on hover */
