@@ -111,7 +111,7 @@ input[type=number] {
 .formContainer {
   width: 80%;
   max-width: 700px;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
   padding-top: 30px;
   border-radius: 10px;
   background-color: #152642;
@@ -237,7 +237,6 @@ input[type=number] {
 
   .formContainer {
     width: 95vw;
-    margin-bottom: 50px;
   }
 
   .studentOpt {

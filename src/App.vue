@@ -30,7 +30,7 @@ body {
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 0, 0.6); 
+  background: rgba(19, 20, 0, 0.5); 
   border-radius: 10px;
 }
 /* Handle on hover */
